@@ -1,0 +1,33 @@
+{% extends "shablon.twig" %}
+
+{% block content %}
+	<form class="row gy-2 m-3 gx-3 align-items-center" action="">
+		<div class="col-auto">
+			Тип
+			<select name="type" class="form-control">
+				<option value="">Все</option>
+				{% for type in types %}
+					<option value="{{type.type}}">{{ type.type|title }}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div class="col-auto">
+			<label>Название
+				<input type="text" name="title" class="form-control"></label>
+		</div>
+		<div class="col-auto">
+			<label>Описание
+				<input type="text" name="info" class="form-control"></label>
+			</div>
+		<div class="col-auto">	
+			<button type="submit" class="btn btn-primary">Найти</button>
+		</div>
+	</form>
+<form class="m-3" action="">
+	{% for ob in objects %}
+	<div class="col-auto">
+		<a class="form-control" aria-current="page" href="/char/{{ob.id}}">{{ob.title}}</a>
+		</div>
+	{% endfor %}
+</form>
+{% endblock %}

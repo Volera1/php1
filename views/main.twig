@@ -1,0 +1,65 @@
+{% extends "shablon.twig" %}
+
+{% block content %}
+	<div class="row d-flex align-items-center">
+		{% for item in characters %}
+			{# <div class="container" style = "margin: 16px;
+															        border: 2px solid;
+															        border-color: white;
+															        border-radius: 6px;
+															        box-shadow: 0 0 8px grey;
+															        background-color: skyblue;
+															        padding: 10px"> #}
+			<div
+				class="col-auto d-flex flex-column align-items-center position-relative" style="margin: 16px;
+																									        border: 2px solid;
+																									        border-color: white;
+																									        border-radius: 6px;
+																									        box-shadow: 0 0 8px grey;
+																									        background-color: skyblue;
+																									        padding: 10px">
+				{# <div class="border p-2 flex-grow-1"> #}
+				<div class="position-absolute" style="right: 4px; top: 4px">
+					<form action="/char/delete" method="POST">
+						<input type="hidden" name="id" value=" {{ item.id }} ">
+						<button type="submit" class="btn btn-danger">
+							<i class="fas fa-times"></i>
+						</button>
+					</form>
+				</div>
+				<div class="position-absolute" style="left: 4px; top: 4px">
+					<a class="btn btn-primary" href="/char/{{item.id}}/edit" role="button"><i class="fa-solid fa-circle-info"></i></a>
+					{# <form action="" method="POST">
+					<input type="hidden" name="id" value=" {{ item.id }} ">
+							<button type="submit" class="btn btn-info">
+					</button> #}
+				{# </form> #}
+			</div>
+			
+			<div class="col align-items-center">
+				<img class="main-image-wrapper" src="{{ item.image }}" style="width: 200px;"/>
+			</div>
+
+			<ul class="nav nav-pills mt-2">
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="/char/{{item.id}}">{{ item.title }}</a>
+				</li>
+			</ul>
+			<ul class="nav nav-pills">
+				<li class="nav-item">
+					<a class="nav-link" aria-current="page" href="/char/{{item.id}}?show=image">Картинка</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" aria-current="page" href="/char/{{item.id}}?show=info">Описание</a>
+				</li>
+			</ul>
+			{# </div> #}
+		</div>
+	{% endfor %}
+
+
+	<ul
+		class="list-group"><!-- ... -->
+	</ul>
+
+{% endblock %}

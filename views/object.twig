@@ -1,0 +1,63 @@
+{% extends "shablon.twig" %}
+
+{% block content %}
+	<div class="container" style="margin: 16px;
+												        border: 2px solid;
+												        border-color: white;
+												        border-radius: 6px;
+												        box-shadow: 0 0 8px grey;
+												        background-color: skyblue;
+												        padding: 10px">
+		<ul class="nav nav-pills">
+			<li class="nav-item">
+				<a class="nav-link active" aria-current="page" href="/char/{{url_prefix}}">{{title}}
+					{{ is_info==is_image ?  '<i class="fa-solid fa-circle-radiation"></i>':'<i class="fa-solid fa-radiation"></i>'}}
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" aria-current="page" href="/char/{{url_prefix}}?show=image">Картинка
+					{{ is_image ?  '<i class="fa-solid fa-circle-radiation"></i>':'<i class="fa-solid fa-radiation"></i>'}}
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" aria-current="page" href="/char/{{url_prefix}}?show=info">Описание
+					{{ is_info ?  '<i class="fa-solid fa-circle-radiation"></i>':'<i class="fa-solid fa-radiation"></i>' }}
+				</a>
+
+			</li>
+		</div>
+
+		<div class="container" style="margin: 16px; border: 2px solid;border-color: white; border-radius: 6px;box-shadow: 0 0 8px grey; background-color: skyblue;">
+
+			<i class="fa-duotone fa-bullseye-arrow fa-0.5x"></i>
+
+			<div class="row">
+				{% if is_info==is_image %}
+					{#Этот иф для изображения #}
+					<div class="col-3 d-flex align-items-center flex-column offset-1">
+						<img class="main-image-wrapper" src="{{ image }}"/>
+					</div>
+				{% endif %}
+	
+				{% block objectContent %}
+				<div class="col d-flex align-items-center flex-column {{url == '/'~url_prefix ? 'offset-1'}}" style="justify-content:center;">
+				{{description}}
+				{{info|raw}}
+				</div>
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+	<style>
+		.main-image-wrapper {
+			width: 300px;
+			height: 300px;
+			border: 2px solid white;
+			margin: 8px;
+			box-shadow: 0 0 16px grey;
+			border-radius: 50%; /* поставил 50% */
+			overflow: hidden;
+		}
+		
+	</style>
+{% endblock %}
