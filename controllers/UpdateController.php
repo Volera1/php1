@@ -4,8 +4,9 @@ require_once "BaseCharTwigController.php";
 class UpdateController extends BaseCharTwigController
 {
     public $template = "create.twig";
-    public function get(array $context) // добавили параметр
+    public function getContext() : array // добавили параметр
     {
+        $context = parent::getContext();
         $id = $this->params['id']; // взяли id
         // parent::get($context); // пробросили параметр
         $sql = <<<EOL
@@ -18,7 +19,7 @@ class UpdateController extends BaseCharTwigController
                 $query->execute();
                 $data=$query->fetch();
                 $context['object']=$data;
-                parent::get($context); 
+                return $context;
     }
 
     public function post(array $context)
