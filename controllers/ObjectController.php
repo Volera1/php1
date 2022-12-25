@@ -22,6 +22,8 @@ class ObjectController extends BaseCharTwigController
         $context['image'] = $data['image'];
         $context['url_prefix'] = $data['id'];
         $context['info'] = $data['info'];
+        $context["messages"] = isset($_SESSION['messages']) ? $_SESSION['messages'] : "";
+
         if (isset($_GET['show'])) {
             $context['is_info'] = preg_match("#info#", $_GET['show']);
             $context['is_image'] = preg_match("#image#", $_GET['show']);

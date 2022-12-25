@@ -6,8 +6,7 @@ class CreateTypeController extends BaseCharTwigController
     public $template = "createtype.twig";
     public function get(array $context) // добавили параметр
     {
-        echo $_SERVER['REQUEST_METHOD'];
-
+        
         parent::get($context); // пробросили параметр
     }
 

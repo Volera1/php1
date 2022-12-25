@@ -11,6 +11,8 @@ require_once "../controllers/CreateController.php";
 require_once "../controllers/CreateTypeController.php";
 require_once "../controllers/DeleteController.php";
 require_once "../controllers/UpdateController.php";
+require_once "../middlewares/SetWelcomeMiddleware.php";
+require_once "../middlewares/LoginRequiredMiddleware.php";
 
 // создаем загрузчик шаблонов, и указываем папку с шаблонами
 // \Twig\Loader\FilesystemLoader -- это типа как в C# писать Twig.Loader.FilesystemLoader, 
@@ -33,17 +35,23 @@ $pdo = new PDO("mysql:host=localhost;dbname=characters;charset=utf8", "root", ""
 // $twig->addGlobal("types", $types);
 
 $router = new Router($twig, $pdo);
+session_set_cookie_params(60*60*10);
+        session_start();
+//$router->add("/set-welcome/", SetWelcomeController::class);
+$router->add("/", MainController::class)->middleware(new SetWelcomeMiddleware());;
+$router->add("/search", SearchController::class)->middleware(new SetWelcomeMiddleware());;
+$router->add("/char/(?P<id>\d+)", ObjectController::class)->middleware(new SetWelcomeMiddleware());;
 
-$router->add("/", MainController::class);
-
-$router->add("/char/(?P<id>\d+)", ObjectController::class); 
 //$router->add("/char/(?P<id>\d+)/image", ImageController::class); 
 //$router->add("/char/(?P<id>\d+)/info", ObjectController::class); 
-$router->add("/search", SearchController::class);
-$router->add("/char/create", CreateController::class);
-$router->add("/type/create", CreateTypeController::class);
-$router->add("/char/delete", DeleteController::class);
-$router->add("/char/(?P<id>\d+)/edit", UpdateController::class);
+
+$router->add("/char/create", CreateController::class)->middleware(new LoginRequiredMiddleware())->middleware(new SetWelcomeMiddleware());;
+$router->add("/type/create", CreateTypeController::class)->middleware(new LoginRequiredMiddleware())->middleware(new SetWelcomeMiddleware());;
+$router->add("/char/delete", DeleteController::class)->middleware(new LoginRequiredMiddleware())->middleware(new SetWelcomeMiddleware());;
+$router->add("/char/(?P<id>\d+)/edit", UpdateController::class)->middleware(new LoginRequiredMiddleware())->middleware(new SetWelcomeMiddleware());;
+
+
+
 $router->get_or_default(Controller404::class);
 
 

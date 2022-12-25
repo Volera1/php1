@@ -10,6 +10,7 @@ class BaseCharTwigController extends TwigBaseController
         $types = $query->fetchAll();
         
         $context['types']=$types;
+        $context["messages"] = isset($_SESSION['messages']) ? $_SESSION['messages'] : "";
         return $context;
     }
 }
